@@ -1,0 +1,27 @@
+<!--Norte-->
+		<link rel="stylesheet" href="L.Control.Rose.css" />
+		<script src="dist/L.Control.Rose.js"></script>
+		
+var rose = L.control.rose('rose', {position:'bottomleft', icon:'nautical', iSize:'medium', opacity:0.8});
+			rose.addTo(mapa)	
+	<div id="rose"></div>
+
+
+
+	
+<!--Control de coordenada-->
+		<link rel="stylesheet" href="Control.Coordinates.css">
+		<script src="Control.Coordinates.js"></script>
+		
+		
+var c = new L.Control.Coordinates();
+		c.addTo(mapa);
+
+		mapa.on('click', function(e) {
+		c.setCoordinates(e);
+		});
+		
+		
+		<script src="leaflet-dvf.markers.js"></script>
+		<script src="leaflet-dvf.markers.js"></script> 
+		<script src="leaflet.dvf.regularpolygon.js"></script>

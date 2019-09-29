@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="utf-8"/>
+		<title>Recursos Naturales de Honduras</title>
+		
+		<!--------Observación Agregar capas-------------------------------------->
+		<script type="text/javascript" src="aapp.js"></script>
+
+			
+		<!--------Observación Agregar el  leaflet-------------------------------------->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+		crossorigin=""/>
+  
+		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+		integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+		crossorigin="">
+  
+		</script>
+		
+		<!------------Observación: Agregar ESRI Maps----------------------------------->
+		<script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"
+		integrity="sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="
+		crossorigin=""></script>
+		
+		<!----------------Observación: Agregar Complementos de Leaflet--------------->
+		<!---------------------------Agregar el MiniMap-------------------------------->
+		<link rel="stylesheet" href="Control.MiniMap.css" />
+		<script src="Control.MiniMap.js" type= "text/javascript">
+		</script>
+	
+		<!----------------Observación: Agregar Mouse Position------------------------->
+		<link rel="stylesheet" href="L.Control.MousePosition.css" />
+		<script src="L.Control.MousePosition.js" type= "text/javascript">
+		</script>
+		
+		<!-----------Observación: Full screen----------------------------------------->
+		<link rel='stylesheet' href='leaflet.fullscreen.css'  />
+		<script src='Leaflet.fullscreen.js'></script>
+		
+		<!--------------Observación: Agregar Map center------------------------------->
+		<link rel="stylesheet" href="leaflet.viewcenter.css" />
+		<script src="leaflet.viewcenter4_3.js"></script>
+
+<!---------Marcadores DataVisualizationMarkers------->
+		<link rel="stylesheet" href="dvf.css" /> 
+		
+		<script src="leaflet-dvf.js"></script> 
+		
+		 
+		<!----------Marcadores de MakiMarkers---------------->
+		<script src="Leaflet.MakiMarkers.js"></script>
+		
+		<!---------Marcadores DataVisualizationMarkers------->
+		<link rel="stylesheet" href="dvf.css" /> 
+</head>
+	
+<body>
+	
+		<div id="map" style="width: 1250px; height: 900px;">
+		</div>
+		
+		<div class='space-bottom'>
+        <div id='map' class='col12 row10'></div>
+		</div>
+		
+			
+		<script>
+		
+			
+		var osm = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', 
+		{attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>', 
+		id: 'mapbox.high-contrast', 
+		accessToken:'sk.eyJ1IjoiamF2aWVybWV6YTk3MDIxNiIsImEiOiJjazA1dWoweWQwMGs0M2xzZXZsOTlsbzZuIn0.RrUAo7LdWczayQQDAeN6xA',
+		maxZoom: 20,
+		minZoom: 6,
+		keyboard: true
+		})
+		
+		var osm2 = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', 
+		{attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>', 
+		id: 'mapbox.streets-basic', 
+		accessToken:'sk.eyJ1IjoiamF2aWVybWV6YTk3MDIxNiIsImEiOiJjazA1dWoweWQwMGs0M2xzZXZsOTlsbzZuIn0.RrUAo7LdWczayQQDAeN6xA',
+		maxZoom: 20,
+		minZoom: 5,
+		keyboard: true
+		
+		});
+		
+		
+		var ESRI = L.esri.basemapLayer('ImageryFirefly');
+		
+		var ESRI_topo = L.esri.basemapLayer('Topographic');
+		
+		var mapa = L.map('map',{
+		center: [14.080788,-87.200228],
+		zoom:12,
+		layers: ESRI_topo,
+		zoomControl: false,
+		fullscreenControl: {pseudoFullscreen: false, position: 'topleft'},
+		
+		maxBounds: [[17.0,-84.0],[12.0,-88.7]]
+		});	
+
+	
+		
+		function popup(feature, layer) {
+		if (feature.properties && feature.properties.nombre) 
+		{layer.bindPopup("<h6>Area Protegida: </h6><h5>"+feature.properties.nombre+ "</h5><h6>Categoria de Manejo: </h6><h5>"+feature.properties.categoria+"</h5><h6>Area (ha): </h6><h5>"+feature.properties.Área_ha+"</h6><h5>");
+		}
+		}
+		
+		var limite = new L.geoJson(aapp, { 'color':"#fc4e2a", 'weight':2.0, 'fill': true, onEachFeature: popup});
+		        
+				<!--Comentario: Marcadorees de L.marker-->
+		
+		var marker = L.marker([14.085350, -87.166216]);
+		mapa.addLayer(marker);
+		marker.bindPopup("UNAH");
+		
+		var marker = L.marker([14.580150, -87.838160]);
+		mapa.addLayer(marker);
+		marker.bindPopup("UNACIFOR");
+
+		var marker = L.marker([14.048137, -87.174073]);
+		mapa.addLayer(marker);
+		marker.bindPopup("UNITEC");
+
+		var mapcenter = L.marker(mapa.getCenter(),{opacity:0.7});
+		mapa.addLayer(mapcenter);
+		mapcenter.bindPopup("Tegucigalpa");
+		
+		<!-------------Marcadores de MakiMarkers----------->
+
+		L.MakiMarkers.accessToken = 'sk.eyJ1IjoiamF2aWVybWV6YTk3MDIxNiIsImEiOiJjazA1dWoweWQwMGs0M2xzZXZsOTlsbzZuIn0.RrUAo7LdWczayQQDAeN6xA';
+
+		var mak2= L.MakiMarkers.icon ({icon:"bank", color: "#e31a1c", size:"l"}); 
+
+		var marker = L.marker([14.071224, -87.205520],{icon:mak2}).addTo(mapa);
+		marker.bindPopup("Banco Central de Honduras");
+
+		var mak3= L.MakiMarkers.icon ({icon:"circle", color: "#41ab5d", size:"l"}); 
+		
+		var marker = L.marker([14.098471, -87.203947],{icon:mak3}).addTo(mapa);
+		marker.bindPopup("Estadio Nacional")
+		
+		var mak4= L.MakiMarkers.icon ({icon:"circle", color: "#ec7014", size:"l"});
+		
+		var marker = L.marker([14.088735, -87.187836],{icon:mak4}).addTo(mapa);
+		marker.bindPopup("Casa Presidencial");
+		
+		
+
+		<!--Comentario: Marcador con imagen personalizada-->
+		var polImagen1 = new L.RegularPolygonMarker([14.087737,-87.159925], {
+		numberOfSides: 6,
+		rotation: 45,
+		radius: 30,
+		fillColor:'black',
+		fillOpacity:1,
+		opacity:1,
+		weight:1,
+		imageCircleUrl: 'espacial1.png' 
+		});
+		
+		mapa.addLayer(polImagen1);  
+		polImagen1.bindPopup("Facultad de Ciencias Espaciales");
+		
+		
+		<!-----------------Cuencas Hidrograficas--------------------------->
+		var cuencas = L.tileLayer.wms("http://localhost:8080/geoserver/MOGT5/wms?service=WMS", {
+		layers: "MOGT5:na0100000013",
+		format: 'image/png',
+		transparent: true,
+		version: '1.1.0',
+		attribution: "Sistema nacional de informacion Territorial- Honduras, 2015"
+		});
+		
+		<!--Leyenda Cuencas Hidrograficas-->			
+		var imageBounds = [[14.387762, -83.512911],[13.237914, -85.010561]];
+		var simcuenca = L.imageOverlay("simcuenca.jpg",
+			imageBounds, {opacity: 2});	
+
+		var fuscioncuenca = L.layerGroup([cuencas, simcuenca ]);	
+					
+		
+		<!-----------------Ecosistemas------------------------------------>
+		var ecosistemas = L.tileLayer.wms("http://localhost:8080/geoserver/MOGT2019/wms?service=WMS", {
+		layers: "MOGT2019:ecosistemas_hn",
+		format: 'image/png',
+		transparent: true,
+		version: '1.1.0',
+		attribution: "Sistema nacional de informacion Territorial- Honduras, 2015"
+		});
+		
+		<!--Leyenda Ecosistemas ---->			
+		var imageBounds = [[13.770772, -83.119153],[11.585118, -86.482007]];
+		var Ecosistemas = L.imageOverlay("Ecosistemas.jpg",
+			imageBounds, {opacity: 2});	
+
+		var fuscionecosistema = L.layerGroup([ecosistemas, Ecosistemas ]);
+					
+		<!-----------------Suelos Simmons------------------------------->
+		var suelos = L.tileLayer.wms("http://localhost:8080/geoserver/JEMGEOSERVER2019/wms?service=WMS", {
+		layers: "JEMGEOSERVER2019:suelos_simmons_hn",
+		format: 'image/png',
+		transparent: true,
+		version: '1.1.0',
+		attribution: "Sistema nacional de informacion Territorial- Honduras, 2015"
+		});
+		
+		<!--Leyenda Suelos Simmons-->			
+		var imageBounds = [[12.599604, -86.609483],[13.646958, -85.048594]];
+		var Simsimmons = L.imageOverlay("Simsimmons.jpg",
+			imageBounds, {opacity: 2});	
+
+		var fuscionsuelos = L.layerGroup([suelos, Simsimmons ]);	
+
+		var capasBase = {
+		"Esri - Topografico": ESRI_topo,
+		"Streets-satellite de MapBox": osm,
+		"Esri - Imagery": ESRI,
+						};
+			
+		var capasOverlay = {
+		
+		"Areas Protegidas": limite,
+		"Ecosistemas de Honduras": fuscionecosistema,
+		"Suelos Simmons": fuscionsuelos,
+		"Cuencas de Honduras": fuscioncuenca,
+		};
+		
+		
+		new L.control.layers(capasBase, capasOverlay,{collapsed:true}).addTo(mapa);
+		
+		new L.Control.Zoom({ position: 'topright'}).addTo(mapa);
+		
+	//	new L.geoJson(honduras).addTo(mapa);
+		var miniMap = new L.Control.MiniMap(osm2,{ toggleDisplay: true, position: 'bottomright' }).addTo(mapa);
+		var MousePosition = new L.control.mousePosition(osm).addTo(mapa);
+		var escala = L.control.scale().addTo(mapa);
+		var viewCenter = new L.Control.ViewCenter(mapa);
+			mapa.addControl(viewCenter);
+		
+	</script>
+	
+	</body>
+	<p><i><strong><font size="4", color="negro">Geovisor Leaflet/BaseMap/Geoserver Presentado por Javier Enrique Meza</font></strong></i></P>
+</html>
