@@ -55,6 +55,41 @@
 		
 		<!---------Marcadores DataVisualizationMarkers------->
 		<link rel="stylesheet" href="dvf.css" /> 
+		
+		<style>
+					
+		#map {
+		width: 100%;
+		height: 600px;
+		box-shadow: 5px 5px 5px #888;
+		}
+		.info {
+		padding: 6px 8px;
+		font: 14px/16px Arial, Helvetica, sans-serif;
+		background: white;
+		background: rgba(255,255,255,0.8);
+		box-shadow: 0 0 15px rgba(0,0,0,0.2);
+		border-radius: 5px;
+		}
+		.info h2 {
+		margin: 0 0 5px;
+		color: #777;
+		}
+		.legend {
+		line-height: 18px;
+		color: #555;
+		}
+				
+		.legend I {
+		width: 18px;
+		height: 18px;
+		float: left;
+		margin-right: 8px;
+		opacity: 0.7;
+		}
+					
+	</style>
+			
 </head>
 	
 <body>
@@ -68,7 +103,13 @@
 		
 			
 		<script>
-		
+		var title = L.control();
+				title.onAdd = function (map) {
+				var div = L.DomUtil.create('div', 'info');
+				div.innerHTML +='<h2>DENSIDAD DE POBLACION DE HONDURAS</h2>DISTRIBUCION DE POBLACION DEPARTAMENTO';
+				return div;
+				};
+				title.addTo(map);
 			
 		var osm = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', 
 		{attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>', 
@@ -88,6 +129,14 @@
 		keyboard: true
 		
 		});
+		
+		var title = L.control();
+		title.onAdd = function (map) {
+		var div = L.DomUtil.create('div', 'info');
+		div.innerHTML +='<h2>Geovisor Recursos Naturales de Honduras</h2>Clase CTE-524 Programacion Aplicada a Entornos SIG <br>Presentado por <b>Javier E. Meza</b></br>';
+		return div;
+		};
+		title.addTo(mapa);
 		
 		
 		var ESRI = L.esri.basemapLayer('ImageryFirefly');
